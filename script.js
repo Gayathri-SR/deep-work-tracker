@@ -1,5 +1,9 @@
 const addTaskButton = document.querySelector('.add-task');
 const taskList = document.querySelector('.task-list');
+
+const tasks = [];
+let taskId=1;
+
 addTaskButton.addEventListener("click", function() {
     const taskInput = document.querySelector('.task-input');
     const task = taskInput.value.trim();
@@ -8,12 +12,16 @@ addTaskButton.addEventListener("click", function() {
         alert("Please enter a valid text"); //To be made UI friendly later
         return;
     }
-    const emptyText = document.querySelector('.empty-list');
-    if(!emptyText.classList.contains('hidden')) emptyText.classList.add('hidden');
 
-    const taskItem = `<div class="task-item"><input type="checkbox" />${task}</div>`;
-    taskList.innerHTML += taskItem;
+    tasks.push({
+        id : taskId++,
+        name : task,
+        completed : false
+    });
+    renderTasks();
     taskInput.value = '';
+
+    console.log(tasks);
 });
 
 taskList.addEventListener("click", function(e) {
@@ -21,3 +29,15 @@ taskList.addEventListener("click", function(e) {
         console.log("Checkbox clicked");
     }
 });
+
+function renderTasks() {
+    const emptyText = document.querySelector('.empty-list');
+    if(!emptyText.classList.contains('hidden')) emptyText.classList.add('hidden');
+
+    taskList.innerHTML = '';
+
+    tasks.forEach((task) => {
+        const taskItem = `<div class="task-item" id=task${task.id}><input type="checkbox" value=${task.completed} />${task.name}</div>`;
+        taskList.innerHTML += taskItem;
+    });
+}
