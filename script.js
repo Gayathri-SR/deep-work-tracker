@@ -37,7 +37,7 @@ function renderTasks() {
     taskList.innerHTML = '';
 
     tasks.forEach((task) => {
-        const taskItem = `<div class="task-item" id=task${task.id}><input type="checkbox" value=${task.completed} />${task.name}</div>`;
+        const taskItem = `<div class="task-item"><input type="checkbox" ${task.completed ? "checked" : ""} />${task.name}</div>`;
         taskList.innerHTML += taskItem;
     });
 }
