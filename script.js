@@ -20,13 +20,18 @@ addTaskButton.addEventListener("click", function() {
     });
     renderTasks();
     taskInput.value = '';
-
-    console.log(tasks);
 });
 
 taskList.addEventListener("click", function(e) {
     if(e.target.type === 'checkbox') {
-        console.log("Checkbox clicked");
+        let taskItem = e.target.closest('.task-item');
+        tasks.forEach((task) => {
+            if(task.id === Number(taskItem.dataset.taskId)) {
+                task.completed = !task.completed;
+                renderTasks();
+                return;
+            }
+        });
     }
 });
 
@@ -37,7 +42,8 @@ function renderTasks() {
     taskList.innerHTML = '';
 
     tasks.forEach((task) => {
-        const taskItem = `<div class="task-item"><input type="checkbox" ${task.completed ? "checked" : ""} />${task.name}</div>`;
+        const taskItem = `<div class="task-item" data-task-id=${task.id}><input type="checkbox" ${task.completed ? "checked" : ""} />${task.name}</div>`;
         taskList.innerHTML += taskItem;
     });
+    console.log(tasks);
 }
